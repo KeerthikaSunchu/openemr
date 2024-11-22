@@ -56,7 +56,7 @@ docker run hello-world
 sudo systemctl enable containerd.service
 sudo systemctl enable docker.service
 sudo apt-get install docker-compose -y
-sudo su - oemr​
+sudo su - oemr
 nano docker-compose.yml
 ```
 ## Create docker-compose
@@ -66,29 +66,27 @@ MYSQL_USER, MYSQL_PASS, OE_USER, MYSQL_PASS are optional for openemr and
 if not provided, then default to openemr, openemr, admin, and pass respectively. 
 ```yaml
 version: '3.1'
-
 services:
   mysql:
     restart: always
     image: mariadb:10.11
-    command: ['mysqld','--character-set-server=utf8mb4','--innodb_buffer_pool_size=12G'] 
+    command: ['mysqld','--character-set-server=utf8mb4']
     volumes:
-      - oemr_databasevolume:/var/lib/mysql
+    - oemr_databasevolume:/var/lib/mysql
     ports:
-      - 3306:3306
+    - 3306:3306
     environment:
       MYSQL_ROOT_PASSWORD: root
-
   openemr:
     restart: always
-    image: ghcr.io/iupui-soic/seiri22:latest
+    image: openemr/openemr:7.0.0
     ports:
-      - 8080:80
-      #- 443:443
+    - 8080:80
+    #- 443:443
     volumes:
-      - oemr_logvolume01:/var/log
-      - oemr_sitevolume:/var/www/localhost/htdocs/openemr/sites
-      #- ./custom-php.ini:/etc/php82/php.ini 
+    - oemr_logvolume01:/var/log
+    - oemr_sitevolume:/var/www/localhost/htdocs/openemr/sites
+    #- /home/oemr/openemr-devops/docker/openemr/flex-edge/utilities/:/root/
     environment:
       MYSQL_HOST: mysql
       MYSQL_ROOT_PASS: root
@@ -97,12 +95,18 @@ services:
       OE_USER: admin
       OE_PASS: pass
     depends_on:
-      - mysql
-
+    - mysql
 volumes:
   oemr_logvolume01: {external: true}
   oemr_sitevolume: {external: true}
   oemr_databasevolume: {external: true}
+```
+## If you have access to volumes link
+```bash
+sudo apt-get install p7zip-full -y
+wget <downloadlink>?download=1
+mv <longfilename> 3-volumes.7z
+7z x 3-volumes.7z
 ```
 ## If you have access to volumes(100 patients)
 ```bash
