@@ -1,6 +1,6 @@
 # OpenEMR FHIR API Documentation
 
-## FHIR API Table of Contents
+## FHIR API Table of Content
 - [Overview](FHIR_README.md#overview)
 - [Prerequisite](FHIR_README.md#prerequisite)
 - [Using FHIR API Internally](FHIR_README.md#using-fhir-api-internally)
