@@ -127,11 +127,9 @@ jobs:
         with:
           node-version: '20'
 
-      - name: Main build
+      - name: Build with Dockerfile
         run: |
-          source ci/ciLibrary.source
-          composer_github_auth
-          main_build
+            docker build -t openemr:latest .
 
       - name: CCDA build
         run: |
